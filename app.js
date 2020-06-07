@@ -11,9 +11,9 @@ app.set('view engine', 'handlebars');
 
 // Tell our app to send the "hello world" message to our home page
 // Render the "home" layout for the main page and send the following msg
-app.get('/', (req, res) => {
-    res.render('home', { msg: 'Handlebars are Cool!' });
-  })
+// app.get('/', (req, res) => {
+//     res.render('home', { msg: 'Handlebars are Cool!' });
+//   })
 
 // OUR MOCK ARRAY OF PROJECTS
 var events = [
@@ -23,7 +23,7 @@ var events = [
   ]
   
 // INDEX
-  app.get('/events', (req, res) => {
+  app.get('/', (req, res) => {
     res.render('events-index', { events: events });
   })
 
@@ -34,4 +34,4 @@ const port = process.env.PORT || 3000;
 // Tell the app what port to listen on
 app.listen(port, () => {
   console.log('App listening on port 3000!')
-})
+})   
