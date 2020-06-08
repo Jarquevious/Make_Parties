@@ -1,6 +1,12 @@
+// INITIALIZE BODY-PARSER AND ADD IT TO APP
+const bodyParser = require('body-parser');
 // Initialize express
 const express = require('express')
 const app = express()
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
 // require handlebars
 var exphbs = require('express-handlebars');
 
@@ -23,11 +29,19 @@ var events = [
   ]
   
 // INDEX
-  app.get('/', (req, res) => {
-    res.render('events-index', { events: events });
-  })
+app.get('/', (req, res) => {
+  res.render('events-index', { events: events });
+})
 
+// NEW
+app.get('/events/new', (req, res) => {
+  res.render('events-new', {});
+})
 
+// CREATE
+app.post('/events', (req, res) => {
+  console.log(req.body);
+})
 // Choose a port to listen on
 const port = process.env.PORT || 3000;
 
@@ -35,3 +49,4 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log('App listening on port 3000!')
 })   
+
