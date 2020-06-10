@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const express = require('express')
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }));
+const models = require('./db/models');
 
 
 
@@ -28,9 +29,11 @@ var events = [
     { title: "I am your third event", desc: "A great event that is super fun to look at and good", imgUrl: "https://3milliondogs.com/blog-assets-two/2015/08/admin-ajax-7.jpeg " }
   ]
   
-// INDEX
+// Index
 app.get('/', (req, res) => {
-  res.render('events-index', { events: events });
+  models.Event.findAll({ order: [['createdAt', 'DESC']] }).then(events => {
+    res.render('events-index', { events: events });
+  })
 })
 
 // NEW
@@ -40,7 +43,11 @@ app.get('/events/new', (req, res) => {
 
 // CREATE
 app.post('/events', (req, res) => {
-  console.log(req.body);
+  models.Event.create(req.body).then(event => {
+    res.redirect(`/`);
+  }).catch((err) => {
+    console.log(err)
+  });
 })
 // Choose a port to listen on
 const port = process.env.PORT || 3000;
