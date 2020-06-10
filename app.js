@@ -5,14 +5,21 @@ const express = require('express')
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }));
 const models = require('./db/models');
+const handlebars = require('handlebars');
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+const exphbs = require('express-handlebars');
+const hbs = exphbs.create({
+    defaultLayout: 'main',
+    handlebars: allowInsecurePrototypeAccess(handlebars),
+});
 
 
 
-// require handlebars
-var exphbs = require('express-handlebars');
+// // require handlebars
+// var exphbs = require('express-handlebars');
 
 // Use "main" as our default layout
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+// app.engine('handlebars', exphbs({ defaultLayout: 'main' }));node_modules/.bin/sequelize db:migrate
 // Use handlebars to render
 app.set('view engine', 'handlebars');
 
